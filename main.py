@@ -55,3 +55,27 @@ long_shift_employees = df[df['Timecard Hours'] > timedelta(hours=14)]
 # Extract unique employee names who have worked more than 14 hours in a single shift
 long_shift_employee_names = long_shift_employees['Employee Name'].unique()
 
+
+# Summarizing the results
+output = """
+Employees who have worked for 7 consecutive days:
+-------------------------------------------------
+{}
+
+Employees who have less than 10 hours of time between shifts but greater than 1 hour:
+--------------------------------------------------------------------------------------
+{}
+
+Employees who have worked for more than 14 hours in a single shift:
+-------------------------------------------------------------------
+{}
+""".format(
+    "\n".join(consecutive_employee_names),
+    "\n".join(time_between_shifts_employee_names),
+    "\n".join(long_shift_employee_names)
+)
+
+# Write the output to a text file
+output_file_path = "output.txt"
+with open(output_file_path, 'w') as f:
+    f.write(output)
