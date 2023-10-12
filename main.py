@@ -29,4 +29,18 @@ consecutive_employees = df_sorted.groupby('Employee Name').filter(consecutive_da
 consecutive_employee_names = consecutive_employees['Employee Name'].unique()
 
 
+# Less than 10 hours of time
+# Function to check if an employee has less than 10 hours but more than 1 hour between shifts
+def time_between_shifts(employee_data):
+    time_diffs = employee_data['Time'].diff().dropna()
+    for diff in time_diffs:
+        if timedelta(hours=1) < diff < timedelta(hours=10):
+            return True
+    return False
 
+
+# Filter the data for employees who have less than 10 hours but more than 1 hour between shifts
+time_between_shifts_employees = df_sorted.groupby('Employee Name').filter(time_between_shifts)
+
+# Extract unique employee names who have less than 10 hours but more than 1 hour between shifts
+time_between_shifts_employee_names = time_between_shifts_employees['Employee Name'].unique()
