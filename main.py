@@ -44,3 +44,14 @@ time_between_shifts_employees = df_sorted.groupby('Employee Name').filter(time_b
 
 # Extract unique employee names who have less than 10 hours but more than 1 hour between shifts
 time_between_shifts_employee_names = time_between_shifts_employees['Employee Name'].unique()
+
+# Worked for more than 14 hours in a single shift
+# Convert the 'Timecard Hours (as Time)' column to timedelta format
+df['Timecard Hours'] = pd.to_timedelta(df['Timecard Hours (as Time)'].str.replace(':', ' hours ') + ' minutes')
+
+# Filter employees who have worked more than 14 hours in a single shift
+long_shift_employees = df[df['Timecard Hours'] > timedelta(hours=14)]
+
+# Extract unique employee names who have worked more than 14 hours in a single shift
+long_shift_employee_names = long_shift_employees['Employee Name'].unique()
+
